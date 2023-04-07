@@ -80,7 +80,7 @@ gateway will not return 200 for valid folders.
 
 When `PROVIDE_INDEX_PAGE` environment variable is set to 1, the gateway will
 transform `/some/path/` to `/some/path/index.html` when retrieving from S3.  
-Default of "index.html" can be edited in `s3gateway.js`. 
+Default of "index.html" can be edited in `lambdagateway.js`. 
 It will also redirect `/some/path` to `/some/path/` when S3 returns 404 on 
 `/some/path` if `APPEND_SLASH_FOR_POSSIBLE_DIRECTORY` is set. `path` has to 
 look like a possible directory, it must not start with a `.` and not have an 

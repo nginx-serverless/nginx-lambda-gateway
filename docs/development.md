@@ -12,7 +12,7 @@ Update the following files when enhancing `nginx-s3-gateway` to integrate with A
   - [`/etc/nginx/include/awssig2.js`](/common/etc/nginx/include/awssig2.js)
   - [`/etc/nginx/include/awssig4.js`](/common/etc/nginx/include/awssig4.js)
 
-- S3 Integration Lib: [`/etc/nginx/include/s3gateway.js`](/common/etc/nginx/include/s3gateway.js)
+- Lambda Integration Lib: [`/etc/nginx/include/lambdagateway.js`](/common/etc/nginx/include/lambdagateway.js)
 - Common Lib for all of NJS: [`/etc/nginx/include/utils.js`](/common/etc/nginx/include/utils.js)
 
 ![](./img/nginx-s3-gateway-signature-flow.png)
