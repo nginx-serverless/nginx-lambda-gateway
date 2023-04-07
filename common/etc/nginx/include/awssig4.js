@@ -48,7 +48,7 @@ const DEFAULT_SIGNED_HEADERS = 'host;x-amz-content-sha256;x-amz-date';
 function signatureV4(r, timestamp, region, service, uri, queryParams, host, credentials) {
     const eightDigitDate = utils.getEightDigitDate(timestamp);
     const amzDatetime = utils.getAmzDatetime(timestamp, eightDigitDate);
-    const canonicalRequest = _buildCanonicalRequest(
+    const canonicalRequest = _buildCanonicalRequest(r,
         r.method, uri, queryParams, host, amzDatetime, credentials.sessionToken);
     const signature = _buildSignatureV4(r, amzDatetime, eightDigitDate,
         credentials, region, service, canonicalRequest);
@@ -73,7 +73,16 @@ function signatureV4(r, timestamp, region, service, uri, queryParams, host, cred
  * @returns {string} string with concatenated request parameters
  * @private
  */
-function _buildCanonicalRequest(method, uri, queryParams, host, amzDatetime, sessionToken) {
+function _buildCanonicalRequest(r,
+    method, uri, queryParams, host, amzDatetime, sessionToken) {
+    r.log('##### ---------------------------- #####')
+    r.log('     _buildCanonicalRequest(): ')
+    r.log('       - uri        : ' + uri)
+    r.log('       - method     : ' + method)
+    r.log('       - queryParams: ' + queryParams)
+    r.log('       - host       : ' + host)
+    r.log('       - amzDatetime: ' + amzDatetime)
+
     let canonicalHeaders = 'host:' + host + '\n' +
         'x-amz-content-sha256:' + EMPTY_PAYLOAD_HASH + '\n' +
         'x-amz-date:' + amzDatetime + '\n';

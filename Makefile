@@ -18,8 +18,8 @@ submodule:
 	git submodule foreach 'git fetch origin; git checkout $$(git rev-parse --abbrev-ref HEAD); git reset --hard origin/$$(git rev-parse --abbrev-ref HEAD); git submodule update --recursive; git clean -dfx'
 
 start-plus:
-	docker build --file Dockerfile.plus --tag nginx-plus-s3-test --tag nginx-plus-s3-test:plus .
-	docker run --env-file ./settings.test --publish 81:80 --name nginx-plus-s3-test nginx-plus-s3-test:plus
+	# docker build --file Dockerfile.plus --tag nginx-plus-s3-test --tag nginx-plus-s3-test:plus .
+	# docker run --env-file ./settings.test --publish 81:80 --name nginx-plus-s3-test nginx-plus-s3-test:plus
 
 start:
 	docker-compose up -d
