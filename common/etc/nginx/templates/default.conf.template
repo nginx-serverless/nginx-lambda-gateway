@@ -1,4 +1,5 @@
 js_import /etc/nginx/include/awscredentials.js;
+js_import /etc/nginx/include/awssig4.js;
 js_import /etc/nginx/include/s3gateway.js;
 js_import /etc/nginx/include/lambdagateway.js;
 
@@ -79,7 +80,7 @@ server {
         # This value is templated in based on the value of $CORS_ENABLED. When
         # CORS is enabled, acceptable methods are GET, HEAD, and OPTIONS.
         # Otherwise, they are GET and HEAD.
-        limit_except ${LIMIT_METHODS_TO} {}
+        # limit_except ${LIMIT_METHODS_TO} {}
 
         # CORS is implemented by returning the appropriate headers as part of
         # the response to an OPTIONS request. If you want to customize the
