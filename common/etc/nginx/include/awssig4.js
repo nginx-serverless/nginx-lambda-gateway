@@ -54,7 +54,7 @@ function signatureV4(r, timestamp, region, service, uri, queryParams, host, cred
         credentials, region, service, canonicalRequest);
     const authHeader = 'AWS4-HMAC-SHA256 Credential='
         .concat(credentials.accessKeyId, '/', eightDigitDate, '/', region, '/', service, '/aws4_request,',
-            'SignedHeaders=', _signedHeaders(credentials.sessionToken), ',Signature=', signature);
+            'SignedHeaders=', _signedHeaders(r, credentials.sessionToken), ',Signature=', signature);
 
     utils.debug_log(r, 'AWS v4 Auth header: [' + authHeader + ']');
 
@@ -77,15 +77,21 @@ function _buildCanonicalRequest(r,
     method, uri, queryParams, host, amzDatetime, sessionToken) {
     r.log('##### ---------------------------- #####')
     r.log('     _buildCanonicalRequest(): ')
-    r.log('       - uri        : ' + uri)
-    r.log('       - method     : ' + method)
-    r.log('       - queryParams: ' + queryParams)
-    r.log('       - host       : ' + host)
-    r.log('       - amzDatetime: ' + amzDatetime)
-
-    let canonicalHeaders = 'host:' + host + '\n' +
-        'x-amz-content-sha256:' + EMPTY_PAYLOAD_HASH + '\n' +
-        'x-amz-date:' + amzDatetime + '\n';
+    r.log('       - uri         : ' + uri)
+    r.log('       - method      : ' + method)
+    r.log('       - queryParams : ' + queryParams)
+    r.log('       - host        : ' + host)
+    r.log('       - amzDatetime : ' + amzDatetime)
+    r.log('       - request body: ' + r.variables.request_body)
+    r.log('       - content_type: ' + r.variables.content_type)
+    const payloadHash = awsHeaderPayloadHash(r);
+    let canonicalHeaders = '';
+    if (r.variables.content_type) {
+        canonicalHeaders += 'content-type:' + r.variables.content_type + '\n'
+    }
+    canonicalHeaders += 'host:' + host + '\n' +
+                        'x-amz-content-sha256:' + payloadHash + '\n' +
+                        'x-amz-date:' + amzDatetime + '\n';
 
     if (sessionToken) {
         canonicalHeaders += 'x-amz-security-token:' + sessionToken + '\n'
@@ -95,8 +101,8 @@ function _buildCanonicalRequest(r,
     canonicalRequest += uri + '\n';
     canonicalRequest += queryParams + '\n';
     canonicalRequest += canonicalHeaders + '\n';
-    canonicalRequest += _signedHeaders(sessionToken) + '\n';
-    canonicalRequest += EMPTY_PAYLOAD_HASH;
+    canonicalRequest += _signedHeaders(r, sessionToken) + '\n';
+    canonicalRequest += payloadHash;
 
     return canonicalRequest;
 }
@@ -199,12 +205,17 @@ function _buildStringToSign(amzDatetime, eightDigitDate, region, service, canoni
  * Creates a string containing the headers that need to be signed as part of v4
  * signature authentication.
  *
+ * @param r {Request} HTTP request object
  * @param sessionToken {string|undefined} AWS session token if present
  * @returns {string} semicolon delimited string of the headers needed for signing
  * @private
  */
-function _signedHeaders(sessionToken) {
-    let headers = DEFAULT_SIGNED_HEADERS;
+function _signedHeaders(r, sessionToken) {
+    let headers = '';
+    if (r.variables.content_type) {
+        headers += 'content-type;';
+    }
+    headers += DEFAULT_SIGNED_HEADERS;
     if (sessionToken) {
         headers += ';x-amz-security-token';
     }
@@ -259,8 +270,27 @@ function _splitCachedValues(cached) {
     return [eightDigitDate, kSigningHash]
 }
 
+/**
+ * Return a payload hash in the header
+ *
+ * @param r {Request} HTTP request object
+ * @returns {string} payload hash
+ */
+function awsHeaderPayloadHash(r) {
+    // Empty payload only works with this crypt library.
+    // TODO: Need to either find the right library or implement the crypto lib.
+    // const reqBodyStr = JSON.stringify(r.variables.request_body);
+    const reqBodyStr = r.variables.request_body;
+    r.log('       - req body str: ' + reqBodyStr)
+    const payloadHash = mod_hmac.createHash('sha256', 'utf8')
+                                .update(reqBodyStr)
+                                .digest('hex');
+    r.log('       - payload Hash: ' + payloadHash)
+    return payloadHash;
+}
 
 export default {
+    awsHeaderPayloadHash,
     signatureV4,
     // These functions do not need to be exposed, but they are exposed so that
     // unit tests can run against them.

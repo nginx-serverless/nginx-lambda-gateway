@@ -1,4 +1,5 @@
 # This header is needed when doing v4 signature authentication. It
 # specifies the timestamp in which the signature was generated and is used with
 # the x-amz-date header.
-js_set $awsDate s3gateway.awsHeaderDate;
+js_set $awsDate        lambdagateway.awsHeaderDate;
+js_set $awsPayloadHash awssig4.awsHeaderPayloadHash;
