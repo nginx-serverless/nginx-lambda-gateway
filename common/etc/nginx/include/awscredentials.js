@@ -223,6 +223,8 @@ function _writeCredentialsToFile(credentials) {
  * @returns {Promise<void>}
  */
 async function fetchCredentials(r) {
+    r.log("start fetchCredentials(): ")
+    r.log("     - request body in fetching credentials: " + r.variables.request_body)
     /* If we are not using an AWS instance profile to set our credentials we
        exit quickly and don't write a credentials file. */
     if (process.env['AWS_ACCESS_KEY_ID'] && process.env['AWS_SECRET_ACCESS_KEY']) {
@@ -289,12 +291,13 @@ async function fetchCredentials(r) {
         r.return(500);
         return;
     }
+
     r.return(200);
 }
 
 /**
  * Get the credentials needed to generate AWS signatures from the ECS
- * (Elastic Container Service) metadata endpoint.
+ * (Elasticd Container Service) metadata endpoint.
  *
  * @param credentialsUri {string} endpoint to get credentials from
  * @returns {Promise<{accessKeyId: (string), secretAccessKey: (string), sessionToken: (string), expiration: (string)}>}

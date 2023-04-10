@@ -40,7 +40,6 @@ utils.requireEnvVar('LAMBDA_REGION');
 function lambdaAuth(r) {
     const host = process.env['LAMBDA_SERVER'];
     const region = process.env['LAMBDA_REGION'];
-    // const uri = '/2015-03-31/' + r.variables.request_uri + '/invocations';
     r.log('#### URI for lambdaAuth(): ' + r.variables.request_uri)
     const queryParams = '';
     const credentials = awscred.readCredentials(r);

@@ -75,8 +75,7 @@ function signatureV4(r, timestamp, region, service, uri, queryParams, host, cred
  */
 function _buildCanonicalRequest(r,
     method, uri, queryParams, host, amzDatetime, sessionToken) {
-    r.log('##### ---------------------------- #####')
-    r.log('     _buildCanonicalRequest(): ')
+    r.log('start _buildCanonicalRequest(): ---------------------<<< ')
     r.log('       - uri         : ' + uri)
     r.log('       - method      : ' + method)
     r.log('       - queryParams : ' + queryParams)
@@ -84,7 +83,8 @@ function _buildCanonicalRequest(r,
     r.log('       - amzDatetime : ' + amzDatetime)
     r.log('       - request body: ' + r.variables.request_body)
     r.log('       - content_type: ' + r.variables.content_type)
-    const payloadHash = awsHeaderPayloadHash(r);
+    const payloadHash = r.variables.awsPayloadHash;
+    r.log('       - payloadHash: ' + payloadHash)
     let canonicalHeaders = '';
     if (r.variables.content_type) {
         canonicalHeaders += 'content-type:' + r.variables.content_type + '\n'
@@ -104,6 +104,7 @@ function _buildCanonicalRequest(r,
     canonicalRequest += _signedHeaders(r, sessionToken) + '\n';
     canonicalRequest += payloadHash;
 
+    r.log('finish _buildCanonicalRequest(): --------------------->>> ')
     return canonicalRequest;
 }
 
@@ -276,18 +277,35 @@ function _splitCachedValues(cached) {
  * @param r {Request} HTTP request object
  * @returns {string} payload hash
  */
-function awsHeaderPayloadHash(r) {
-    // Empty payload only works with this crypt library.
-    // TODO: Need to either find the right library or implement the crypto lib.
-    // const reqBodyStr = JSON.stringify(r.variables.request_body);
+async function awsHeaderPayloadHash(r) {
+    r.log('start awsHeaderPayloadHash(): ');
     const reqBodyStr = r.variables.request_body;
     r.log('       - req body str: ' + reqBodyStr)
-    const payloadHash = mod_hmac.createHash('sha256', 'utf8')
-                                .update(reqBodyStr)
-                                .digest('hex');
+
+    const encoder = new TextEncoder();
+    const data = encoder.encode(reqBodyStr);
+    const hash = await crypto.subtle.digest("SHA-256", data);
+    const payloadHash = Buffer.from(hash).toString('hex');
     r.log('       - payload Hash: ' + payloadHash)
-    return payloadHash;
+    r.variables.lambda_payload_hash = payloadHash;
+    r.setReturnValue(payloadHash);
+    r.log('finish awsHeaderPayloadHash(): ');
 }
+
+// function awsHeaderPayloadHash(r) {
+//     // Empty payload only works with this crypt library.
+//     // TODO: Need to either find the right library or implement the crypto lib.
+//     // const reqBodyStr = JSON.stringify(r.variables.request_body);
+//     const reqBodyStr = r.variables.request_body;
+//     r.log('       - req body str: ' + reqBodyStr)
+//     const payloadHash = mod_hmac.createHash('sha256', 'utf8')
+//                                 .update(reqBodyStr)
+//                                 .digest('hex');
+//     r.log('       - payload Hash: ' + payloadHash)
+//     r.variables.lambda_payload_hash = payloadHash;
+
+//     return payloadHash;
+// }
 
 export default {
     awsHeaderPayloadHash,

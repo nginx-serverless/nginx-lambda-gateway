@@ -278,7 +278,6 @@ runUnitTestWithOutSessionToken() {
     -e "S3_STYLE=virtual"                 \
     -e "AWS_ACCESS_KEY_ID=unit_test"       \
     -e "AWS_SECRET_ACCESS_KEY=unit_test"          \
-    -e "S3_BUCKET_NAME=unit_test"         \
     -e "S3_SERVER=unit_test"              \
     -e "S3_SERVER_PROTO=https"            \
     -e "S3_SERVER_PORT=443"               \
@@ -302,7 +301,6 @@ runUnitTestWithSessionToken() {
     -e "AWS_ACCESS_KEY_ID=unit_test"       \
     -e "AWS_SECRET_ACCESS_KEY=unit_test"          \
     -e "AWS_SESSION_TOKEN=unit_test"       \
-    -e "S3_BUCKET_NAME=unit_test"         \
     -e "S3_SERVER=unit_test"              \
     -e "S3_SERVER_PROTO=https"            \
     -e "S3_SERVER_PORT=443"               \

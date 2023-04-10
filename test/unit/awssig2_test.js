@@ -17,7 +17,6 @@
  */
 
 import awssig2 from "include/awssig2.js";
-import s3gateway from "include/s3gateway.js";
 
 
 function _runSignatureV2(r) {

@@ -7,7 +7,7 @@ services:
     image: nplus_lambda_gateway
     build:
       context: ./
-      dockerfile: Dockerfile.plus
+      dockerfile: Dockerfile.oss
     env_file:
       - settings.test
     volumes:

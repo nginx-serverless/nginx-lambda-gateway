@@ -17,7 +17,6 @@
  */
 
 import awssig4 from "include/awssig4.js";
-import s3gateway from "include/s3gateway.js";
 import utils from "include/utils.js";
 
 

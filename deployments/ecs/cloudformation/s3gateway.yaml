@@ -223,8 +223,6 @@ Resources:
               Value: 'true'
             - Name: AWS_SIGS_VERSION
               Value: '4'
-            - Name: S3_BUCKET_NAME
-              Value: !Ref 'S3Bucket'
             - Name: S3_REGION
               Value: !Ref 'AWS::Region'
             - Name: S3_SERVER_PORT

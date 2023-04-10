@@ -30,7 +30,7 @@ fi
 
 failed=0
 
-required=("S3_BUCKET_NAME" "S3_SERVER" "S3_SERVER_PORT" "S3_SERVER_PROTO"
+required=("S3_SERVER" "S3_SERVER_PORT" "S3_SERVER_PROTO"
 "S3_REGION" "S3_STYLE" "ALLOW_DIRECTORY_LIST" "AWS_SIGS_VERSION")
 
 if [ ! -z ${AWS_CONTAINER_CREDENTIALS_RELATIVE_URI+x} ]; then
@@ -79,7 +79,6 @@ echo "Installing using github '${branch}' branch"
 
 echo "S3 Backend Environment"
 echo "Access Key ID: ${AWS_ACCESS_KEY_ID}"
-echo "Origin: ${S3_SERVER_PROTO}://${S3_BUCKET_NAME}.${S3_SERVER}:${S3_SERVER_PORT}"
 echo "Region: ${S3_REGION}"
 echo "Addressing Style: ${S3_STYLE}"
 echo "AWS Signatures Version: v${AWS_SIGS_VERSION}"
@@ -135,8 +134,6 @@ cat > "/etc/nginx/environment" << EOF
 ALLOW_DIRECTORY_LIST=${ALLOW_DIRECTORY_LIST}
 # AWS Authentication signature version (2=v2 authentication, 4=v4 authentication)
 AWS_SIGS_VERSION=${AWS_SIGS_VERSION}
-# Name of S3 bucket to proxy requests to
-S3_BUCKET_NAME=${S3_BUCKET_NAME}
 # Region associated with API
 S3_REGION=${S3_REGION}
 # SSL/TLS port to connect to
@@ -304,7 +301,6 @@ EOF
 fi
 
 cat >> /etc/nginx/nginx.conf << 'EOF'
-env S3_BUCKET_NAME;
 env S3_SERVER;
 env S3_SERVER_PORT;
 env S3_SERVER_PROTO;
@@ -353,7 +349,6 @@ download "common/etc/nginx/include/awscredentials.js" "/etc/nginx/include/awscre
 download "common/etc/nginx/include/awssig2.js" "/etc/nginx/include/awssig2.js"
 download "common/etc/nginx/include/awssig4.js" "/etc/nginx/include/awssig4.js"
 download "common/etc/nginx/include/lambdagateway.js" "/etc/nginx/include/lambdagateway.js"
-download "common/etc/nginx/include/s3gateway.js" "/etc/nginx/include/s3gateway.js"
 download "common/etc/nginx/include/utils.js" "/etc/nginx/include/utils.js"
 download "common/etc/nginx/templates/default.conf.template" "/etc/nginx/templates/default.conf.template"
 download "common/etc/nginx/templates/gateway/v2_headers.conf.template" "/etc/nginx/templates/gateway/v2_headers.conf.template"

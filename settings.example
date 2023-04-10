@@ -1,4 +1,3 @@
-S3_BUCKET_NAME=my-bucket
 AWS_ACCESS_KEY_ID=ZZZZZZZZZZZZZZZZZZZZ
 AWS_SECRET_ACCESS_KEY=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 AWS_SESSION_TOKEN=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
