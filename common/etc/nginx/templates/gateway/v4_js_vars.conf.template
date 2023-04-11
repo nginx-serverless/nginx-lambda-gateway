@@ -2,4 +2,4 @@
 # specifies the timestamp in which the signature was generated and is used with
 # the x-amz-date header.
 js_set $awsDate        lambdagateway.awsHeaderDate;
-js_set $awsPayloadHash awssig4.awsHeaderPayloadHash;
+js_set $awsPayloadHash awssig4.awsHeaderPayloadHash2;

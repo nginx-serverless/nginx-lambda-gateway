@@ -1,4 +1,8 @@
 # This header is needed when doing v4 signature authentication. It
 # specifies the timestamp in which the signature was generated.
 proxy_set_header x-amz-date $awsDate;
-proxy_set_header x-amz-content-sha256 $awsPayloadHash;
+
+set $lambda_payload_hash $awsPayloadHash;
+proxy_set_header x-amz-content-sha256 $lambda_payload_hash;
+#proxy_set_header x-amz-content-sha256 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'; #$awsPayloadHash;
+#proxy_set_header x-amz-content-sha256 $awsPayloadHash;

@@ -28,7 +28,8 @@ const EMPTY_PAYLOAD_HASH = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495
  * Constant defining the headers being signed.
  * @type {string}
  */
-const DEFAULT_SIGNED_HEADERS = 'host;x-amz-content-sha256;x-amz-date';
+// const DEFAULT_SIGNED_HEADERS = 'host;x-amz-content-sha256;x-amz-date';
+const DEFAULT_SIGNED_HEADERS = 'host;x-amz-date';
 
 
 /**
@@ -84,7 +85,9 @@ function _buildCanonicalRequest(r,
     r.log('       - amzDatetime : ' + amzDatetime)
     r.log('       - request body: ' + r.variables.request_body)
     r.log('       - content_type: ' + r.variables.content_type)
-    const payloadHash = awsHeaderPayloadHash(r);
+    r.log('       - lambda_payload_hash: ' + r.variables.lambda_payload_hash)
+    const payloadHash = r.variables.lambda_payload_hash; //awsHeaderPayloadHash(r);
+    // const payloadHash = awsHeaderPayloadHash(r);
     let canonicalHeaders = '';
     if (r.variables.content_type) {
         canonicalHeaders += 'content-type:' + r.variables.content_type + '\n'
@@ -276,21 +279,50 @@ function _splitCachedValues(cached) {
  * @param r {Request} HTTP request object
  * @returns {string} payload hash
  */
+// async function awsHeaderPayloadHash2(r) {
+//     r.log('start awsHeaderPayloadHash-2(): ');
+//     r.log('       - request_id 2 : ' + r.variables.request_id);
+//     const reqBodyStr = r.variables.request_body;
+//     r.log('       - req body str2: ' + reqBodyStr)
+
+//     const encoder = new TextEncoder();
+//     const data = encoder.encode(reqBodyStr);
+//     const hash = await crypto.subtle.digest("SHA-256", data);
+//     const payloadHash = Buffer.from(hash).toString('hex');
+//     r.log('       - payload Hash2: ' + payloadHash)
+//     r.setReturnValue(payloadHash);
+//     r.log('finish awsHeaderPayloadHash-2(): ');
+// }
+
+async function awsHeaderPayloadHash2(r) {
+    r.log('start awsHeaderPayloadHash-2(): ');
+    r.log('       - request_id 2 : ' + r.variables.request_id);
+    let hash = await crypto.subtle.digest('SHA-256', r.variables.request_body);
+    const payloadHash = Buffer.from(hash).toString('hex');
+    r.log('       - payload Hash2: ' + payloadHash)
+    r.setReturnValue(Buffer.from(hash).toString('hex'));
+    r.log('finish awsHeaderPayloadHash-2(): ');
+}
+
 function awsHeaderPayloadHash(r) {
     // Empty payload only works with this crypt library.
     // TODO: Need to either find the right library or implement the crypto lib.
     // const reqBodyStr = JSON.stringify(r.variables.request_body);
     const reqBodyStr = r.variables.request_body;
+    r.log('start awsHeaderPayloadHash(): ');
+    r.log('       - request_id   : ' + r.variables.request_id);
     r.log('       - req body str: ' + reqBodyStr)
     const payloadHash = mod_hmac.createHash('sha256', 'utf8')
                                 .update(reqBodyStr)
                                 .digest('hex');
     r.log('       - payload Hash: ' + payloadHash)
+    r.log('finish awsHeaderPayloadHash(): ');
     return payloadHash;
 }
 
 export default {
     awsHeaderPayloadHash,
+    awsHeaderPayloadHash2,
     signatureV4,
     // These functions do not need to be exposed, but they are exposed so that
     // unit tests can run against them.
