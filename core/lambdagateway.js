@@ -31,21 +31,42 @@ utils.requireEnvVar('LAMBDA_SERVER_PORT');
 
 
 /**
- * Creates an AWS authentication signature based on the global settings and
- * the passed request parameter.
+ * Creates an AWS authentication signature to invole Lambda Function ARN based
+ * on the global settings and the passed request parameter.
  *
  * @param r {Request} HTTP request object
  * @returns {string} AWS authentication signature
  */
-function lambdaAuth(r) {
+function lambdaFunctionARNAuth(r) {
     const host = process.env['LAMBDA_SERVER'];
     const region = process.env['LAMBDA_REGION'];
     const queryParams = '';
     const credentials = awscred.readCredentials(r);
 
-    let signature = awssig4.signatureV4(
+    const signature = awssig4.signatureV4(
         r, awscred.getNow(), region, SERVICE,
         r.variables.request_uri, queryParams, host, credentials
+    );
+    return signature;
+}
+
+/**
+ * Creates an AWS authentication signature to invole Lambda Function URL based
+ * on the global settings and the passed request parameter.
+ *
+ * @param r {Request} HTTP request object
+ * @returns {string} AWS authentication signature
+ */
+function lambdaFunctionURLAuth(r) {
+    const host = r.variables.lambda_func_host ? r.variables.lambda_func_host : '';
+    const region = process.env['LAMBDA_REGION'];
+    const queryParams = '';
+    const credentials = awscred.readCredentials(r);
+    const requestURI = '/';
+
+    const signature = awssig4.signatureV4(
+        r, awscred.getNow(), region, SERVICE,
+        requestURI, queryParams, host, credentials
     );
     return signature;
 }
@@ -233,7 +254,8 @@ function _isDirectory(path) {
 export default {
     awsHeaderDate,
     editHeaders,
-    lambdaAuth,
+    lambdaFunctionARNAuth,
+    lambdaFunctionURLAuth,
     lambdaDate,
     lambdaHost,
     lambdaURI,

@@ -76,11 +76,10 @@ function signatureV4(r, timestamp, region, service, uri, queryParams, host, cred
 function _buildCanonicalRequest(r,
     method, uri, queryParams, host, amzDatetime, sessionToken) {
     const payloadHash = awsHeaderPayloadHash(r);
-    let canonicalHeaders = '';
-    canonicalHeaders += 'host:' + host + '\n' +
-        'x-amz-date:' + amzDatetime + '\n';
+    let canonicalHeaders = 'host:' + host + '\n' +
+                           'x-amz-date:' + amzDatetime + '\n';
 
-    if (sessionToken) {
+    if (sessionToken && sessionToken.length > 0) {
         canonicalHeaders += 'x-amz-security-token:' + sessionToken + '\n'
     }
 
@@ -198,11 +197,8 @@ function _buildStringToSign(amzDatetime, eightDigitDate, region, service, canoni
  */
 function _signedHeaders(r, sessionToken) {
     let headers = '';
-    // if (r.variables.content_type) {
-    //     headers += 'content-type;';
-    // }
     headers += DEFAULT_SIGNED_HEADERS;
-    if (sessionToken) {
+    if (sessionToken && sessionToken.length > 0) {
         headers += ';x-amz-security-token';
     }
     return headers;
