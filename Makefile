@@ -1,5 +1,5 @@
-start:
-	docker-compose up -d
+start-01:
+	docker-compose -f examples/01-proxy-to-all-lambda-functions/docker-compose.yml up -d
 
 ps:
 	docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Ports}}\t{{.Names}}"
@@ -7,8 +7,8 @@ ps:
 watch:
 	watch 'docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Ports}}\t{{.Names}}"'
 
-down:
-	docker-compose down
+down-01:
+	docker-compose -f examples/01-proxy-to-all-lambda-functions/docker-compose.yml down
 
 clean: 
 	docker kill $$(docker ps -q) 2> /dev/null || true
