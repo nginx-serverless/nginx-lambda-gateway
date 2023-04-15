@@ -24,10 +24,10 @@ import utils from "./utils.js";
  */
 const SERVICE = 'lambda';
 
-utils.requireEnvVar('LAMBDA_SERVER');
-utils.requireEnvVar('LAMBDA_SERVER_PROTO');
-utils.requireEnvVar('LAMBDA_SERVER_PORT');
 utils.requireEnvVar('LAMBDA_REGION');
+utils.requireEnvVar('LAMBDA_SERVER_PROTO');
+utils.requireEnvVar('LAMBDA_SERVER');
+utils.requireEnvVar('LAMBDA_SERVER_PORT');
 
 
 /**
@@ -66,10 +66,28 @@ function redirectToLambda(r) {
  * @returns {string} uri for Lambda request
  */
 function lambdaURI(r) {
-    let uriPath = r.variables.uri_path ? r.variables.uri_path : '/';
-    let path = _escapeURIPath(uriPath);
+    const uriPath = r.variables.uri_path ? r.variables.uri_path : '/';
+    const path = _escapeURIPath(uriPath);
     utils.debug_log(r, 'AWS Lambda Request URI: ' + path);
     return path;
+}
+
+/**
+ * Returns the Lambda host given the environment variables
+ *
+ * @param r HTTP request
+ * @returns {string} host for Lambda request
+ */
+function lambdaHost(r) {
+    const proto = process.env['LAMBDA_SERVER_PROTO'];
+    const server = process.env['LAMBDA_SERVER'];
+    const port = process.env['LAMBDA_SERVER_PORT'];
+
+    // Generate lambda host using env variables as the following example:
+    //   "https://lambda.us-east-2.amazonaws.com";
+    const host = `${proto}://${server}:${port}`; 
+    utils.debug_log(r, 'AWS Lambda Request Host: ' + host);
+    return host;
 }
 
 /**
@@ -223,6 +241,7 @@ export default {
     editHeaders,
     lambdaAuth,
     lambdaDate,
+    lambdaHost,
     lambdaURI,
     redirectToLambda,
     trailslashControl,
