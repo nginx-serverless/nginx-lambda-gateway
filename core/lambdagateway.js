@@ -99,12 +99,6 @@ function lambdaHost(r) {
 const ADDITIONAL_HEADER_PREFIXES_TO_STRIP = utils.parseArray(process.env['HEADER_PREFIXES_TO_STRIP']);
 
 /**
- * Default filename for index pages to be read off of the backing object store.
- * @type {string}
- */
-const INDEX_PAGE = "index.html";
-
-/**
  * Transform the headers returned from Lambda such that there isn't information
  * leakage about Lambda and do other tasks needed for appropriate gateway output.
  * @param r HTTP request
