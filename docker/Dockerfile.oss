@@ -1,0 +1,18 @@
+FROM nginx
+
+LABEL maintainer="Shawn"
+
+RUN mkdir -p /etc/nginx/conf.d    \
+    mkdir -p /etc/nginx/lambda && \
+    mkdir -p /etc/nginx/status 
+
+RUN    chmod -R 644 /etc/nginx
+RUN    chmod -R 644 /etc/nginx/conf.d
+RUN    chmod -R 644 /etc/nginx/lambda
+
+COPY  core/*                        /etc/nginx/lambda/
+COPY  common/etc/nginx/nginx.conf   /etc/nginx/
+COPY  service/etc/nginx/conf.d/*    /etc/nginx/conf.d/
+
+STOPSIGNAL SIGTERM
+CMD ["nginx", "-g", "daemon off;"]
