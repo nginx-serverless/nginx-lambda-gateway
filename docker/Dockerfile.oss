@@ -12,7 +12,6 @@ RUN    chmod -R 644 /etc/nginx/lambda
 
 COPY  core/*                        /etc/nginx/lambda/
 COPY  common/etc/nginx/nginx.conf   /etc/nginx/
-COPY  service/etc/nginx/conf.d/*    /etc/nginx/conf.d/
 
 STOPSIGNAL SIGTERM
 CMD ["nginx", "-g", "daemon off;"]
