@@ -1,23 +1,17 @@
 version: '3'
 services:
-
-  nplus_lambda_gateway:
-    hostname: nplus_lambda_gateway
-    container_name: nplus_lambda_gateway
-    image: nplus_lambda_gateway
+  nginx_lambda:
+    hostname: nginx_lambda
+    container_name: nginx_lambda
+    image: nginx_lambda
     build:
       context: ./
-      dockerfile: Dockerfile.plus
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ./service/etc/nginx/conf.d:/etc/nginx/conf.d
+      - ./core:/etc/nginx/lambda
+    ports:
+      - "80:80"
+      - "8080:8080"
     env_file:
       - settings.test
-    volumes:
-      - type: bind
-        source: ./common/etc/nginx/include/
-        target: /etc/nginx/include/
-    ports:
-      - "81:80"
-    networks:
-      - mynetwork
-
-networks:
-  mynetwork:

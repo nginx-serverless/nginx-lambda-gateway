@@ -1,4 +1,0 @@
-# This header is needed when doing v4 signature authentication. It
-# specifies the timestamp in which the signature was generated.
-proxy_set_header x-amz-date $awsDate;
-proxy_set_header x-amz-content-sha256 $awsPayloadHash;
