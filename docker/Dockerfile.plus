@@ -13,11 +13,6 @@ RUN  mkdir -p /etc/ssl/nginx
 COPY common/etc/ssl/*.crt /etc/ssl/nginx/
 COPY common/etc/ssl/*.key /etc/ssl/nginx/
 
-# Download certificate and key from the customer portal (https://account.f5.com)
-# and copy to the build context
-# RUN --mount=type=secret,id=nginx-crt,dst=nginx-repo.crt \
-#     --mount=type=secret,id=nginx-key,dst=nginx-repo.key \
-
 RUN set -x \
     # Create nginx user/group first, to be consistent throughout Docker variants
     && addgroup --system --gid 101 nginx \
@@ -87,11 +82,9 @@ RUN    chmod -R 644 /etc/nginx
 RUN    chmod -R 644 /etc/nginx/conf.d
 RUN    chmod -R 644 /etc/nginx/lambda
 
-# COPY (Nginx configuration) directory
 COPY  core/*                        /etc/nginx/lambda/
 COPY  common/etc/nginx/nginx.conf   /etc/nginx/
 COPY  service/etc/nginx/conf.d/*    /etc/nginx/conf.d/
-# COPY  common/etc/nginx/status/              /etc/nginx/status/
 
 EXPOSE 80
 
