@@ -5,17 +5,16 @@ services:
     container_name: nginx_lambda
     image: nginx_lambda
     build:
-      context: ./
+      context: ../../
       # Enable this when using NGINX OSS
       dockerfile: ./docker/Dockerfile.oss
       
       # Enable this when using NGINX Plus
       # dockerfile: ./docker/Dockerfile.plus
     volumes:
-      - ./examples/01-proxy-to-all-lambda-functions/:/etc/nginx/conf.d/
-      - ./core:/etc/nginx/lambda
+      - ../../examples/01-proxy-to-all-lambda-functions/:/etc/nginx/conf.d/
+      - ../../core:/etc/nginx/lambda
     ports:
       - "80:80"
-      - "8080:8080"
     env_file:
-      - settings.test
+      - ../../settings.test
