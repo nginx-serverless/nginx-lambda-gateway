@@ -73,16 +73,16 @@ RUN set -x \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
 RUN mkdir -p /etc/nginx/conf.d    \
-    mkdir -p /etc/nginx/lambda && \
+    mkdir -p /etc/nginx/aws    && \
     mkdir -p /etc/nginx/status 
 
 VOLUME /etc/nginx
 
 RUN    chmod -R 644 /etc/nginx
 RUN    chmod -R 644 /etc/nginx/conf.d
-RUN    chmod -R 644 /etc/nginx/lambda
+RUN    chmod -R 644 /etc/nginx/aws
 
-COPY  core/*                        /etc/nginx/lambda/
+COPY  core/*                        /etc/nginx/aws/
 COPY  common/etc/nginx/nginx.conf   /etc/nginx/
 
 EXPOSE 80
