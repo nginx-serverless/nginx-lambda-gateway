@@ -58,7 +58,7 @@ function lambdaFunctionARNAuth(r) {
  * @returns {string} AWS authentication signature
  */
 function lambdaFunctionURLAuth(r) {
-    const host = r.variables.lambda_func_host ? r.variables.lambda_func_host : '';
+    const host = r.variables.lambda_host ? r.variables.lambda_host : '';
     const region = process.env['LAMBDA_REGION'];
     const queryParams = '';
     const credentials = awscred.readCredentials(r);
@@ -72,12 +72,21 @@ function lambdaFunctionURLAuth(r) {
 }
 
 /**
- * Redirects the request to the appropriate location. 
+ * Redirects the request to the appropriate location of AWS Lambda Function ARN.
  *
  * @param r {Request} HTTP request object
  */
-function redirectToLambda(r) {
-    r.internalRedirect("@lambda");
+function redirectToLambdaFunctionARN(r) {
+    r.internalRedirect("@lambda_function_arn");
+}
+
+/**
+ * Redirects the request to the AWS Lambda Function URL.
+ *
+ * @param r {Request} HTTP request object
+ */
+function redirectToLambdaFunctionURL(r) {
+    r.internalRedirect("@lambda_function_url");
 }
 
 /**
@@ -94,21 +103,55 @@ function lambdaURI(r) {
 }
 
 /**
- * Returns the Lambda host given the environment variables
+ * Returns the host of Lambda Function ARN
  *
  * @param r HTTP request
- * @returns {string} host for Lambda request
+ * @returns {string} host of Lambda Function ARN
  */
-function lambdaHost(r) {
+function lambdaFunctionARNHost(r) {
+    return process.env['LAMBDA_SERVER'];
+}
+
+/**
+ * Returns the protocol of Lambda Function ARN/URL
+ *
+ * @param r HTTP request
+ * @returns {string} protocol of Lambda Function ARN/URL
+ */
+function lambdaProto(r) {
+    const proto = process.env['LAMBDA_SERVER_PROTO'];
+    utils.debug_log(r, 'AWS Lambda Server Protocol: ' + proto);
+    return proto;
+}
+
+/**
+ * Returns the port of Lambda Function ARN/URL
+ *
+ * @param r HTTP request
+ * @returns {string} port of Lambda Function ARN/URL
+ */
+function lambdaPort(r) {
+    const port = process.env['LAMBDA_SERVER_PORT'];
+    utils.debug_log(r, 'AWS Lambda Server Port: ' + port);
+    return port;
+}
+
+/**
+ * Returns the Lambda URL given the environment variables
+ *
+ * @param r HTTP request
+ * @returns {string} URL for Lambda request
+ */
+function lambdaURL(r) {
     const proto = process.env['LAMBDA_SERVER_PROTO'];
     const server = process.env['LAMBDA_SERVER'];
     const port = process.env['LAMBDA_SERVER_PORT'];
 
-    // Generate lambda host using env variables as the following example:
+    // Generate lambda URL using env variables as the following example:
     //   "https://lambda.us-east-2.amazonaws.com";
-    const host = `${proto}://${server}:${port}`; 
-    utils.debug_log(r, 'AWS Lambda Request Host: ' + host);
-    return host;
+    const url = `${proto}://${server}:${port}`; 
+    utils.debug_log(r, 'AWS Lambda Request URL: ' + url);
+    return url;
 }
 
 /**
@@ -255,11 +298,15 @@ export default {
     awsHeaderDate,
     editHeaders,
     lambdaFunctionARNAuth,
+    lambdaFunctionARNHost,
     lambdaFunctionURLAuth,
     lambdaDate,
-    lambdaHost,
+    lambdaPort,
+    lambdaProto,
     lambdaURI,
-    redirectToLambda,
+    lambdaURL,
+    redirectToLambdaFunctionARN,
+    redirectToLambdaFunctionURL,
     trailslashControl,
     // These functions do not need to be exposed, but they are exposed so that
     // unit tests can run against them.
