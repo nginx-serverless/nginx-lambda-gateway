@@ -10,8 +10,8 @@ ENV NJS_VERSION     0.7.10
 ENV PKG_RELEASE     1~bullseye
 
 RUN  mkdir -p /etc/ssl/nginx
-COPY common/etc/ssl/*.crt /etc/ssl/nginx/
-COPY common/etc/ssl/*.key /etc/ssl/nginx/
+COPY common/ssl/*.crt /etc/ssl/nginx/
+COPY common/ssl/*.key /etc/ssl/nginx/
 
 RUN set -x \
     # Create nginx user/group first, to be consistent throughout Docker variants
@@ -79,19 +79,14 @@ RUN mkdir -p /etc/nginx/conf.d    \
 VOLUME /etc/nginx
 
 RUN mkdir -p /etc/nginx/aws     && \
-    mkdir -p /etc/nginx/conf.d  && \
-    mkdir -p /etc/nginx/gateway
+    mkdir -p /etc/nginx/conf.d  
 
 RUN chmod -R 644 /etc/nginx
 RUN chmod -R 644 /etc/nginx/aws
 RUN chmod -R 644 /etc/nginx/conf.d
-RUN chmod -R 644 /etc/nginx/gateway
 
-COPY  core/*                        /etc/nginx/aws/
-COPY  common/etc/nginx/nginx.conf   /etc/nginx/
-COPY  common/etc/nginx/gateway/*    /etc/nginx/gateway/
-
-EXPOSE 80
+COPY  core/*                    /etc/nginx/aws/
+COPY  common/nginx/nginx.conf   /etc/nginx/
 
 STOPSIGNAL SIGQUIT
 

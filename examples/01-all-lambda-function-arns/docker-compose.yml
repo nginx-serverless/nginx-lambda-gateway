@@ -1,9 +1,9 @@
 version: '3'
 services:
-  nginx_lambda_01:
-    hostname: nginx_lambda_01
-    container_name: nginx_lambda_01
-    image: nginx_lambda_01
+  nginx_lambda_gateway_01:
+    hostname: nginx_lambda_gateway_01
+    container_name: nginx_lambda_gateway_01
+    image: nginx_lambda_gateway_01
     build:
       context: ../../
       # Enable this when using NGINX OSS
@@ -15,6 +15,6 @@ services:
       - ../../examples/01-all-lambda-function-arns/:/etc/nginx/conf.d/
       - ../../core:/etc/nginx/aws
     ports:
-      - "81:80"
+      - "80:80"
     env_file:
       - ../../settings.test

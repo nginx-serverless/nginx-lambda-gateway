@@ -7,14 +7,14 @@ services:
     build:
       context: ./
       # Enable this when using NGINX OSS
-      dockerfile: ./docker/Dockerfile.oss
+      dockerfile: docker/Dockerfile.oss
       
       # Enable this when using NGINX Plus
-      # dockerfile: ./docker/Dockerfile.plus
+      # dockerfile: docker/Dockerfile.plus
     volumes:
-      - ./common/etc/nginx/gateway/:/etc/nginx/gateway/
+      - ./examples/01-all-lambda-function-arns:/etc/nginx/conf.d/
       - ./core:/etc/nginx/aws
     ports:
-      - "8000:8000"
+      - "80:80"
     env_file:
-      - ./settings.test
+      - settings.test
