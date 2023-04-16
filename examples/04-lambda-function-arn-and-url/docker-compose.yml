@@ -12,7 +12,7 @@ services:
       # Enable this when using NGINX Plus
       # dockerfile: ./docker/Dockerfile.plus
     volumes:
-      - ../../examples/01-proxy-to-all-lambda-functions/:/etc/nginx/conf.d/
+      - ../../examples/04-lambda-function-arn-and-url/:/etc/nginx/conf.d/
       - ../../core:/etc/nginx/lambda
     ports:
       - "80:80"

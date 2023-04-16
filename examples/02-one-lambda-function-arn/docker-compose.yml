@@ -1,0 +1,20 @@
+version: '3'
+services:
+  nginx_lambda:
+    hostname: nginx_lambda
+    container_name: nginx_lambda
+    image: nginx_lambda
+    build:
+      context: ../../
+      # Enable this when using NGINX OSS
+      dockerfile: ./docker/Dockerfile.oss
+      
+      # Enable this when using NGINX Plus
+      # dockerfile: ./docker/Dockerfile.plus
+    volumes:
+      - ../../examples/02-one-lambda-function-arn/:/etc/nginx/conf.d/
+      - ../../core:/etc/nginx/lambda
+    ports:
+      - "80:80"
+    env_file:
+      - ../../settings.test
