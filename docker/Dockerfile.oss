@@ -9,8 +9,8 @@ RUN chmod -R 644 /etc/nginx
 RUN chmod -R 644 /etc/nginx/aws
 RUN chmod -R 644 /etc/nginx/conf.d
 
-COPY  core/*                    /etc/nginx/aws/
-COPY  common/nginx/nginx.conf   /etc/nginx/
+COPY  common/lambda-core/*          /etc/nginx/aws/
+COPY  common/etc/nginx/nginx.conf   /etc/nginx/
 
 STOPSIGNAL SIGTERM
 CMD ["nginx", "-g", "daemon off;"]
