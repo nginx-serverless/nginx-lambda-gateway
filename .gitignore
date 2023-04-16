@@ -8,6 +8,8 @@
 *.crt
 *.key
 settings.test
+__pycache__/*
+*.pyc
 
 # User-specific stuff
 .idea/**/workspace.xml
