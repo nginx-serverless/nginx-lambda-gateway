@@ -1,6 +1,6 @@
 # AWS Lambda Runtime Interface Emulator
 
-The AWS Lambda Runtime Interface Emulator (RIE) is a proxy for the Lambda Runtime API that allows you to locally test your Lambda function packaged as a container image. The emulator is a lightweight web server that converts HTTP requests into JSON events to pass to the Lambda function in the container image.
+The **AWS Lambda Runtime Interface Emulator (RIE)** is a proxy for the Lambda Runtime API that allows you to locally test your Lambda function packaged as a container image. The emulator is a lightweight web server that converts HTTP requests into JSON events to pass to the Lambda function in the container image.
 
 > Note: The RIE does not emulate **Lambda’s security and authentication configurations**, or Lambda orchestration.
 
@@ -55,3 +55,4 @@ The AWS Lambda Runtime Interface Emulator (RIE) is a proxy for the Lambda Runtim
 ## References
 - [Testing Lambda container images locally](https://docs.aws.amazon.com/lambda/latest/dg/images-test.html)
 - [Using AWS Lambda environment variables](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html)
+- [GitHub: AWS Lambda Runtime Interface Emulator](https://github.com/aws/aws-lambda-runtime-interface-emulator)
