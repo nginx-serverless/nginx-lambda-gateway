@@ -1,7 +1,8 @@
 import json
 
 def lambda_handler(event, context):
-    # TODO implement
+    """Sample lambda handler for a function of `foo`.
+    """
     return {
         'statusCode': 200,
         'body': {
