@@ -72,20 +72,20 @@ RUN set -x \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-RUN mkdir -p /etc/nginx/conf.d    \
-    mkdir -p /etc/nginx/aws    && \
+RUN mkdir -p /etc/nginx/conf.d         \
+    mkdir -p /etc/nginx/serverless  && \
     mkdir -p /etc/nginx/status 
 
 VOLUME /etc/nginx
 
-RUN mkdir -p /etc/nginx/aws     && \
+RUN mkdir -p /etc/nginx/serverless  && \
     mkdir -p /etc/nginx/conf.d  
 
 RUN chmod -R 644 /etc/nginx
-RUN chmod -R 644 /etc/nginx/aws
+RUN chmod -R 644 /etc/nginx/serverless
 RUN chmod -R 644 /etc/nginx/conf.d
 
-COPY  common/lambda-core/*          /etc/nginx/aws/
+COPY  common/lambda-core/*          /etc/nginx/serverless/
 COPY  common/etc/nginx/nginx.conf   /etc/nginx/
 
 STOPSIGNAL SIGQUIT

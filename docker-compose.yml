@@ -13,7 +13,7 @@ services:
       # dockerfile: docker/Dockerfile.plus
     volumes:
       - ./common/etc/nginx/conf.d:/etc/nginx/conf.d
-      - ./common/lambda-core:/etc/nginx/aws
+      - ./common/lambda-core:/etc/nginx/serverless
     ports:
       - "80:80"
     env_file:

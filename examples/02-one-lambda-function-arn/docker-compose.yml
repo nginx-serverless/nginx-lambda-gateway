@@ -13,7 +13,7 @@ services:
       # dockerfile: ./docker/Dockerfile.plus
     volumes:
       - ../../examples/02-one-lambda-function-arn/:/etc/nginx/conf.d/
-      - ../../common/lambda-core:/etc/nginx/aws
+      - ../../common/lambda-core:/etc/nginx/serverless
     ports:
       - "80:80"
     env_file:
