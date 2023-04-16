@@ -90,7 +90,7 @@ function redirectToLambdaFunctionURL(r) {
 }
 
 /**
- * Returns the Lambda path given the incoming request
+ * Returns the Lambda path given the incoming request.
  *
  * @param r HTTP request
  * @returns {string} uri for Lambda request
@@ -103,7 +103,7 @@ function lambdaURI(r) {
 }
 
 /**
- * Returns the host of Lambda Function ARN
+ * Returns the host of Lambda Function ARN.
  *
  * @param r HTTP request
  * @returns {string} host of Lambda Function ARN
@@ -113,7 +113,7 @@ function lambdaFunctionARNHost(r) {
 }
 
 /**
- * Returns the protocol of Lambda Function ARN/URL
+ * Returns the protocol of Lambda Function ARN/URL.
  *
  * @param r HTTP request
  * @returns {string} protocol of Lambda Function ARN/URL
@@ -125,7 +125,7 @@ function lambdaProto(r) {
 }
 
 /**
- * Returns the port of Lambda Function ARN/URL
+ * Returns the port of Lambda Function ARN/URL.
  *
  * @param r HTTP request
  * @returns {string} port of Lambda Function ARN/URL
@@ -137,7 +137,7 @@ function lambdaPort(r) {
 }
 
 /**
- * Returns the Lambda URL given the environment variables
+ * Returns the Lambda URL given the environment variables.
  *
  * @param r HTTP request
  * @returns {string} URL for Lambda request
