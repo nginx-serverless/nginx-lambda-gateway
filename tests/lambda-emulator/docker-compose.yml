@@ -1,0 +1,23 @@
+version: '3'
+services:
+
+  lambda_emulator:
+    hostname: lambda_emulator
+    container_name: lambda_emulator
+    image: lambda_emulator
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - settings.env
+    volumes:
+      - type: bind
+        source: ./app
+        target: /var/task/
+    ports:
+      - "9000:8080"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
