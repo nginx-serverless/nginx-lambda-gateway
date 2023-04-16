@@ -1,5 +1,3 @@
-<!-- [![CI](https://github.com/nginxinc/nginx-s3-gateway/actions/workflows/main.yml/badge.svg)](https://github.com/nginxinc/nginx-s3-gateway/actions/workflows/main.yml) ![Docker Pulls](https://img.shields.io/docker/pulls/nginxinc/nginx-s3-gateway?style=plastic) -->
-
 # NGINX Lambda Gateway
 
 ## Introduction
