@@ -20,13 +20,12 @@ Refer to the [Getting Started Guide](docs/getting_started.md) for how to build a
 ## Directory Structure and File Descriptions
 
 ```
-.
-|-- Makefile
+nginx-lambda-gateway
 |
 |-- common
 |   |-- etc
 |   |   |-- nginx
-|   |   `-- ssl
+|   |   └─- ssl
 |   |-- lambda-core
 |   |   |-- awscredentials.js
 |   |   |-- awssig2.js
@@ -35,12 +34,12 @@ Refer to the [Getting Started Guide](docs/getting_started.md) for how to build a
 |   |   |-- lambda_ngx_http.conf
 |   |   |-- lambda_ngx_proxy.conf
 |   |   |-- lambdagateway.js
-|   |   `-- utils.js
-|   `-- lambda-emulator
+|   |   └-- utils.js
+|   └-- lambda-emulator
 |
 |-- docker
 |   |-- Dockerfile.oss
-|   `-- Dockerfile.plus
+|   └-- Dockerfile.plus
 |
 |-- docker-compose.yml
 |
@@ -50,11 +49,13 @@ Refer to the [Getting Started Guide](docs/getting_started.md) for how to build a
 |   |-- 01-all-lambda-function-arns
 |   |-- 02-one-lambda-function-arn
 |   |-- 03-one-lambda-function-url
-|   `-- 04-lambda-function-arn-and-url
+|   └-- 04-lambda-function-arn-and-url
 |
-|-- settings.env
+|-- tests
 |
-`-- tests
+|-- Makefile
+|
+└-- settings.env
 ```
 
 ## Development
