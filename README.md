@@ -19,6 +19,44 @@ Refer to the [Getting Started Guide](docs/getting_started.md) for how to build a
 
 ## Directory Structure and File Descriptions
 
+```
+.
+|-- Makefile
+|
+|-- common
+|   |-- etc
+|   |   |-- nginx
+|   |   `-- ssl
+|   |-- lambda-core
+|   |   |-- awscredentials.js
+|   |   |-- awssig2.js
+|   |   |-- awssig4.js
+|   |   |-- lambda_ngx_apis.conf
+|   |   |-- lambda_ngx_http.conf
+|   |   |-- lambda_ngx_proxy.conf
+|   |   |-- lambdagateway.js
+|   |   `-- utils.js
+|   `-- lambda-emulator
+|
+|-- docker
+|   |-- Dockerfile.oss
+|   `-- Dockerfile.plus
+|
+|-- docker-compose.yml
+|
+|-- docs
+|
+|-- examples
+|   |-- 01-all-lambda-function-arns
+|   |-- 02-one-lambda-function-arn
+|   |-- 03-one-lambda-function-url
+|   `-- 04-lambda-function-arn-and-url
+|
+|-- settings.env
+|
+`-- tests
+```
+
 ## Development
 
 Refer to the [Development Guide](docs/development.md) for more information about extending or testing the gateway.
