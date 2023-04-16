@@ -17,4 +17,4 @@ services:
     ports:
       - "80:80"
     env_file:
-      - ../../settings.test
+      - ../../settings.env
