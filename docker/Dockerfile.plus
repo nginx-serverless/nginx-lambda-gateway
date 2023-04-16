@@ -78,12 +78,18 @@ RUN mkdir -p /etc/nginx/conf.d    \
 
 VOLUME /etc/nginx
 
-RUN    chmod -R 644 /etc/nginx
-RUN    chmod -R 644 /etc/nginx/conf.d
-RUN    chmod -R 644 /etc/nginx/aws
+RUN mkdir -p /etc/nginx/aws     && \
+    mkdir -p /etc/nginx/conf.d  && \
+    mkdir -p /etc/nginx/gateway
+
+RUN chmod -R 644 /etc/nginx
+RUN chmod -R 644 /etc/nginx/aws
+RUN chmod -R 644 /etc/nginx/conf.d
+RUN chmod -R 644 /etc/nginx/gateway
 
 COPY  core/*                        /etc/nginx/aws/
 COPY  common/etc/nginx/nginx.conf   /etc/nginx/
+COPY  common/etc/nginx/gateway/*    /etc/nginx/gateway/
 
 EXPOSE 80
 

@@ -1,3 +1,6 @@
+start:
+	docker-compose up -d
+
 start-01:
 	docker-compose -f examples/01-all-lambda-function-arns/docker-compose.yml up -d
 
@@ -15,6 +18,9 @@ ps:
 
 watch:
 	watch 'docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Ports}}\t{{.Names}}"'
+
+down:
+	docker-compose down
 
 down-01:
 	docker-compose -f examples/01-all-lambda-function-arns/docker-compose.yml down
