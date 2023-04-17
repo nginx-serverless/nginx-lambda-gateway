@@ -21,6 +21,8 @@ Refer to the [Getting Started Guide](docs/getting_started.md) for how to build a
 
 ## Directory Structure and File Descriptions
 
+<div style="background-color: rgb(50, 50, 50);">
+
 ```
 nginx-lambda-gateway
 |
@@ -36,11 +38,11 @@ nginx-lambda-gateway
 |   |   |-- lambda_ngx_apis.conf    API endpoints config for nginx-lambda-gateway
 |   |   |-- lambda_ngx_http.conf    common config under NGINX http directive
 |   |   |-- lambda_ngx_proxy.conf   common config to be set before proxy_pass
-|   |   └-- utils.js                common lib to be reused by all NJS codebases
+|   |   └-- utils.js                common lib to be reused by all NJS codebase
 |   └-- lambda-emulator             proxy for Lambda Runtime API to locally test
 |
 |-- docker
-|   |-- Dockerfile.oss              for NGINX OSS to act as a Lambda gateway
+|   |-- Dockerfile.oss              for NGINX OSS  to act as a Lambda gateway
 |   └-- Dockerfile.plus             for NGINX Plus to act as a Lambda gateway
 |
 |-- docker-compose.yml              Docker config to build and run nginx-lambda-gateway
@@ -54,10 +56,11 @@ nginx-lambda-gateway
 |   |-- 03-one-lambda-function-url  NGINX proxy to one Lambda function URL
 |   └-- 04-lambda-function-arn-url  NGINX proxy to both of Lambda function ARN and URL
 |
-|-- tests                           test launcher and unit/integration test code
+|-- tests                           test launcher and unit/integration test codebase
 |
-└-- Makefile                        automate to build/start/stop lambda-gateway
+└-- Makefile                        automate to build/start/stop nginx-lambda-gateway
 ```
+</div>
 
 ## Development
 
@@ -71,4 +74,4 @@ All code include is licensed under the [Apache 2.0 license](LICENSE.txt).
 - [NGINX S3 Gateway](https://github.com/nginxinc/nginx-s3-gateway)
 - [NGINX AWS Signature](https://github.com/nginxinc/nginx-aws-signature)
 - [NGINX Plus OIDC Reference Implementation](https://github.com/nginxinc/nginx-openid-connect)
-- [NGINX OIDC Core and App Reference Implementation for ACM/NMS/NIC/N+](https://github.com/nginx-openid-connect)
+- [NGINX OIDC Core and App Examples for ACM/NMS/NIC/N+](https://github.com/nginx-openid-connect)
