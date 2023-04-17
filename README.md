@@ -43,7 +43,7 @@ nginx-lambda-gateway
 |   |-- Dockerfile.oss              for NGINX OSS to act as a Lambda gateway
 |   └-- Dockerfile.plus             for NGINX Plus to act as a Lambda gateway
 |
-|-- docker-compose.yml
+|-- docker-compose.yml              Docker config to build and run nginx-lambda-gateway
 |-- settings.env                    Docker env file
 |
 |-- docs                            contains documentation about the project
@@ -52,7 +52,7 @@ nginx-lambda-gateway
 |   |-- 01-all-lambda-function-arns NGINX proxy to all Lambda function ARNs
 |   |-- 02-one-lambda-function-arn  NGINX proxy to one Lambda function ARN
 |   |-- 03-one-lambda-function-url  NGINX proxy to one Lambda function URL
-|   └-- 04-lambda-function-arn-url  NGINX proxy to both Lambda function ARN/URL
+|   └-- 04-lambda-function-arn-url  NGINX proxy to both of Lambda function ARN and URL
 |
 |-- tests                           test launcher and unit/integration test code
 |
