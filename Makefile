@@ -11,7 +11,7 @@ start-03:
 	docker-compose -f examples/03-one-lambda-function-url/docker-compose.yml up -d
 
 start-04:
-	docker-compose -f examples/04-lambda-function-arn-and-url/docker-compose.yml up -d
+	docker-compose -f examples/04-lambda-function-arn-url/docker-compose.yml up -d
 
 ps:
 	docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Ports}}\t{{.Names}}"
@@ -32,7 +32,7 @@ down-03:
 	docker-compose -f examples/03-one-lambda-function-url/docker-compose.yml down
 
 down-04:
-	docker-compose -f examples/04-lambda-function-arn-and-url/docker-compose.yml down
+	docker-compose -f examples/04-lambda-function-arn-url/docker-compose.yml down
 
 clean: 
 	docker kill $$(docker ps -q) 2> /dev/null || true
