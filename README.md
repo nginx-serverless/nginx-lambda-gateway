@@ -21,46 +21,43 @@ Refer to the [Getting Started Guide](docs/getting_started.md) for how to build a
 
 ## Directory Structure and File Descriptions
 
-<div style="background-color: rgb(50, 50, 50);">
-
 ```
 nginx-lambda-gateway
-|
-|-- common
-|   |-- etc
-|   |   |-- nginx                   default nginx-lambda-gateway configuration
-|   |   └─- ssl                     contains certificates and NGINX Plus license
-|   |-- lambda-core
-|   |   |-- awscredentials.js       common lib to read and write AWS credentials
-|   |   |-- awssig2.js              common lib to build AWS signature v2
-|   |   |-- awssig4.js              common lib to build AWS signature v4
-|   |   |-- lambdagateway.js        common lib to integrate the Lambda from NGINX
-|   |   |-- lambda_ngx_apis.conf    API endpoints config for nginx-lambda-gateway
-|   |   |-- lambda_ngx_http.conf    common config under NGINX http directive
-|   |   |-- lambda_ngx_proxy.conf   common config to be set before proxy_pass
-|   |   └-- utils.js                common lib to be reused by all NJS codebase
-|   └-- lambda-emulator             proxy for Lambda Runtime API to locally test
-|
-|-- docker
-|   |-- Dockerfile.oss              for NGINX OSS  to act as a Lambda gateway
-|   └-- Dockerfile.plus             for NGINX Plus to act as a Lambda gateway
-|
-|-- docker-compose.yml              Docker config to build and run nginx-lambda-gateway
-|-- settings.env                    Docker env file
-|
-|-- docs                            contains documentation about the project
-|
-|-- examples
-|   |-- 01-all-lambda-function-arns NGINX proxy to all Lambda function ARNs
-|   |-- 02-one-lambda-function-arn  NGINX proxy to one Lambda function ARN
-|   |-- 03-one-lambda-function-url  NGINX proxy to one Lambda function URL
-|   └-- 04-lambda-function-arn-url  NGINX proxy to both of Lambda function ARN and URL
-|
-|-- tests                           test launcher and unit/integration test codebase
-|
-└-- Makefile                        automate to build/start/stop nginx-lambda-gateway
+│
+├── common
+│   ├── etc
+│   │   ├── nginx                   default nginx-lambda-gateway configuration
+│   │   └── ssl                     contains certificates and NGINX Plus license
+│   ├── lambda-core
+│   │   ├── awscredentials.js       common lib to read and write AWS credentials
+│   │   ├── awssig2.js              common lib to build AWS signature v2
+│   │   ├── awssig4.js              common lib to build AWS signature v4
+│   │   ├── lambdagateway.js        common lib to integrate the Lambda from NGINX
+│   │   ├── lambda_ngx_apis.conf    API endpoints config for nginx-lambda-gateway
+│   │   ├── lambda_ngx_http.conf    common config under NGINX http directive
+│   │   ├── lambda_ngx_proxy.conf   common config to be set before proxy_pass
+│   │   └── utils.js                common lib to be reused by all NJS codebase
+│   └── lambda-emulator             proxy for Lambda Runtime API to locally test
+│
+├── docker
+│   ├── Dockerfile.oss              for NGINX OSS  to act as a Lambda gateway
+│   └── Dockerfile.plus             for NGINX Plus to act as a Lambda gateway
+│
+├── docker-compose.yml              Docker config to build and run nginx-lambda-gateway
+├── settings.env                    Docker env file
+│
+├── docs                            contains documentation about the project
+│
+├── examples
+│   ├── 01-all-lambda-function-arns NGINX proxy to all Lambda function ARNs
+│   ├── 02-one-lambda-function-arn  NGINX proxy to one Lambda function ARN
+│   ├── 03-one-lambda-function-url  NGINX proxy to one Lambda function URL
+│   └── 04-lambda-function-arn-url  NGINX proxy to both of Lambda function ARN and URL
+│
+├── tests                           test launcher and unit/integration test codebase
+│
+└── Makefile                        automate to build/start/stop nginx-lambda-gateway
 ```
-</div>
 
 ## Development
 
