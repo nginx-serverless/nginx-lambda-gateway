@@ -202,33 +202,6 @@ function _isHeaderToBeStripped(headerName, additionalHeadersToStrip) {
     return false;
 }
 
-/**
- * Outputs the timestamp used to sign the request, so that it can be added to
- * the 'Date' header and sent by NGINX.
- *
- * @param r {Request} HTTP request object (not used, but required for NGINX configuration)
- * @returns {string} RFC2616 timestamp
- */
-function lambdaDate(r) {
-    return awscred.getNow().toUTCString();
-}
-
-/**
- * Outputs the timestamp used to sign the request, so that it can be added to
- * the 'x-amz-date' header and sent by NGINX. The output format is
- * ISO 8601: YYYYMMDD'T'HHMMSS'Z'.
- * @see {@link https://docs.aws.amazon.com/general/latest/gr/sigv4-date-handling.html | Handling dates in Signature Version 4}
- *
- * @param r {Request} HTTP request object (not used, but required for NGINX configuration)
- * @returns {string} ISO 8601 timestamp
- */
-function awsHeaderDate(r) {
-    return utils.getAmzDatetime(
-        awscred.getNow(),
-        utils.getEightDigitDate(awscred.getNow())
-    );
-}
-
 function trailslashControl(r) {
     if (APPEND_SLASH) {
         const hasExtension = /\/[^.\/]+\.[^.]+$/;
@@ -295,12 +268,10 @@ function _isDirectory(path) {
 
 
 export default {
-    awsHeaderDate,
     editHeaders,
     lambdaFunctionARNAuth,
     lambdaFunctionARNHost,
     lambdaFunctionURLAuth,
-    lambdaDate,
     lambdaPort,
     lambdaProto,
     lambdaURI,
