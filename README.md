@@ -6,7 +6,7 @@ This project provides a working configuration of NGINX configured to act as an a
 
 ![](./docs/img/nginx-lambda-gateway-intro.png)
 
-Within the proxy layer, additional functionality can be configured such as:
+Within the proxy layer of `nginx-lambda-gateway`, additional functionality can be configured such as:
 
 - Providing an AWS signature based authentication gateway using an alternative authentication
    system to AWS Lambda functions
