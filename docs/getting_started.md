@@ -40,7 +40,7 @@
   | `HEADER_PREFIXES_TO_STRIP` | No        | `true`, `false` | `false`                              | A list of HTTP header prefixes that exclude headers client responses. List should be specified in lower-case and a semicolon (;) should be used to as a deliminator between values. For example: `x-amz-;x-something-` |
 
   > Note: 
-  > - Define the following environment variables in your machine if you want to use the above default values.
+  > - Define the following environment variables in your machine when using the above default values.
   >   e.g.: `AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN` in `~/.bash_profile`.
   > - `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN` are only used to configure the gateway when running as a Container or as a Systemd service.
  
@@ -51,22 +51,23 @@
   ```nginx
   map $request_uri $lambda_host {
     # Use default host ($lambdaFunctionARNHost) when using one region for
-    # multiple Lambda Function ARNs.
+    # multiple Lambda Function ARNs per NGINX Lambda Gateway.
     default $lambdaFunctionARNHost;
 
-    # Define $lambdaFunctionARNHost per endpoint when using multiple regions 
+    # Add default host per endpoint when using multiple regions for
     # multiple Lambda Function ARNs per NGINX Lambda Gateway.
     # '/2015-03-31/functions/foo/invocations' $lambdaFunctionARNHost;
 
-    # Define the following host per endpoint when using AWS Lambda Function URL
-    # '/bar' {url-id}.lambda-url.{region}.on.aws;
+    # Add the following host with ediging {url_id} and {aws-region} per endpoint
+    # when using AWS Lambda Function URL
+    # '/bar' {url-id}.lambda-url.{aws-region}.on.aws;
   }
 
   map $request_uri $lambda_url {
     # Use default Lambda server URL when using AWS Lambda Function ARN.
     default  $lambdaProto://$lambda_host:$lambdaPort;
 
-    # Define Lambda server URL per endpoint when using AWS Lambda Function URL.
+    # Add Lambda server URL per endpoint when using AWS Lambda Function URL.
     # '/bar' $lambdaProto://$lambda_host/;
   }
 
@@ -80,15 +81,15 @@
         js_content lambdagateway.redirectToLambdaFunctionARN;
     }
 
-    # Define this config when using a proxy to one AWS Lambda Function ARN.
-    # - arn:aws:lambda:{region}:{account-id}:function:foo
+    # Add this config per endpoint when using a proxy to a Lambda Function ARN.
+    # - arn:aws:lambda:{aws-region}:{account-id}:function:foo
     # location /2015-03-31/functions/foo/invocations {
     #     auth_request /aws/credentials/retrieval;
     #     js_content lambdagateway.redirectToLambdaFunctionARN;
     # }
 
-    # Define this config when using a proxy to one AWS Lambda Function URL.
-    # - https://{url-id}.lambda-url.{region}.on.aws/
+    # Add this config per endpoint when using a proxy to a Lambda Function URL.
+    # - https://{url-id}.lambda-url.{aws-region}.on.aws/
     # location /bar {
     #     auth_request /aws/credentials/retrieval;
     #     js_content lambdagateway.redirectToLambdaFunctionURL;
