@@ -17,12 +17,13 @@
 
   ![](../docs/img/lambda-func-deployment.png)
 
-- [Download NGINX Plus license files](https://www.nginx.com/free-trial-request/), and copy them to [`./common/etc/ssl/`](../common/etc/ssl/)
+- [**Optional:** Download NGINX Plus license files](https://www.nginx.com/free-trial-request/), and copy them to [`./common/etc/ssl/`](../common/etc/ssl/)
 
   ```
   nginx-repo.crt
   nginx-repo.key
   ```
+  > Note: This step is only required when running `nginx-lambda-gateway` using NGINX Plus.
 
 - Configure environment variables in [`settings.env`](../settings.env)
 
@@ -43,8 +44,61 @@
   >   e.g.: `AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN` in `~/.bash_profile`.
   > - `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN` are only used to configure the gateway when running as a Container or as a Systemd service.
  
+- **Optional:** Edit nginx configuration
 
-- Edit nginx configuration
+  Skip this step when using 80 port and one AWS region for multiple AWS Lambda Function ARNs. Otherwise, configure the [`/etc/nginx/conf.d/nginx_lambda_gateway.conf`](../common/etc/nginx/conf.d/nginx_lambda_gateway.conf):
+
+  ```nginx
+  map $request_uri $lambda_host {
+    # Use default host ($lambdaFunctionARNHost) when using one region for
+    # multiple Lambda Function ARNs.
+    default $lambdaFunctionARNHost;
+
+    # Define $lambdaFunctionARNHost per endpoint when using multiple regions 
+    # multiple Lambda Function ARNs per NGINX Lambda Gateway.
+    # '/2015-03-31/functions/foo/invocations' $lambdaFunctionARNHost;
+
+    # Define the following host per endpoint when using AWS Lambda Function URL
+    # '/bar' {url-id}.lambda-url.{region}.on.aws;
+  }
+
+  map $request_uri $lambda_url {
+    # Use default Lambda server URL when using AWS Lambda Function ARN.
+    default  $lambdaProto://$lambda_host:$lambdaPort;
+
+    # Define Lambda server URL per endpoint when using AWS Lambda Function URL.
+    # '/bar' $lambdaProto://$lambda_host/;
+  }
+
+  server {
+    include "serverless/lambda_ngx_apis.conf";
+    listen 80; # Use SSL/TLS in production
+
+    # Use this config when using a proxy to all AWS Lambda Function ARNs.
+    location / {
+        auth_request /aws/credentials/retrieval;
+        js_content lambdagateway.redirectToLambdaFunctionARN;
+    }
+
+    # Define this config when using a proxy to one AWS Lambda Function ARN.
+    # - arn:aws:lambda:{region}:{account-id}:function:foo
+    # location /2015-03-31/functions/foo/invocations {
+    #     auth_request /aws/credentials/retrieval;
+    #     js_content lambdagateway.redirectToLambdaFunctionARN;
+    # }
+
+    # Define this config when using a proxy to one AWS Lambda Function URL.
+    # - https://{url-id}.lambda-url.{region}.on.aws/
+    # location /bar {
+    #     auth_request /aws/credentials/retrieval;
+    #     js_content lambdagateway.redirectToLambdaFunctionURL;
+    # }
+
+    # Enable when debugging is needed
+    # error_log  /var/log/nginx/error.log  debug; # Reduce severity level as required
+    # access_log /var/log/nginx/access.log main;
+  }
+  ```
 
 ## Quick Starter with Running in Your Laptop
 - [Install and run Docker](https://docs.docker.com/engine/install/)
