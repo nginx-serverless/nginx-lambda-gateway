@@ -14,7 +14,8 @@
  *  limitations under the License.
  */
 
-import utils from "./utils.js";
+import awscred from "./awscredentials.js";
+import utils   from "./utils.js";
 
 const mod_hmac = require('crypto');
 
@@ -253,6 +254,22 @@ function _splitCachedValues(cached) {
 }
 
 /**
+ * Outputs the timestamp used to sign the request, so that it can be added to
+ * the 'x-amz-date' header and sent by NGINX. The output format is
+ * ISO 8601: YYYYMMDD'T'HHMMSS'Z'.
+ * @see {@link https://docs.aws.amazon.com/general/latest/gr/sigv4-date-handling.html | Handling dates in Signature Version 4}
+ *
+ * @param r {Request} HTTP request object (not used, but required for NGINX configuration)
+ * @returns {string} ISO 8601 timestamp
+ */
+function awsHeaderDate(r) {
+    return utils.getAmzDatetime(
+        awscred.getNow(),
+        utils.getEightDigitDate(awscred.getNow())
+    );
+}
+
+/**
  * Return a payload hash in the header
  *
  * @param r {Request} HTTP request object
@@ -267,6 +284,7 @@ function awsHeaderPayloadHash(r) {
 }
 
 export default {
+    awsHeaderDate,
     awsHeaderPayloadHash,
     signatureV4,
     // These functions do not need to be exposed, but they are exposed so that
