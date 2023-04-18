@@ -2,7 +2,7 @@
 
 **TABLE OF CONTENTS:**
 - [Prerequisites](#prerequisites)
-- [Quick Starter with Running in Your Laptop](#quick-starter-with-running-in-your-laptop)
+- [Quick Starter: Running in Your Laptop](#quick-starter-running-in-your-laptop)
 - [Running as a Systemd Service](#running-as-a-systemd-service)
 - [Running in Containers](#running-in-containers)
 - [Running Using AWS Instance Profile Credentials](#running-using-aws-instance-profile-credentials)
@@ -101,7 +101,7 @@
   }
   ```
 
-## Quick Starter with Running in Your Laptop
+## Quick Starter: Running in Your Laptop
 - [Install and run Docker](https://docs.docker.com/engine/install/)
 - Start a NGINX Lambda Gateway container
   ```bash
@@ -130,7 +130,7 @@
   make down
   ```
 
-- Clean a NGINX Lambda Gateway Container Image
+- Clean a NGINX Lambda Gateway container image
   ```bash
   make clean
   ```
