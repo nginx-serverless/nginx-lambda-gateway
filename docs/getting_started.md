@@ -30,7 +30,7 @@
   | Name                       | Required? | Allowed Values  | Default                              | Description                                   |
   |----------------------------|-----------|-----------------|--------------------------------------|-----------------------------------------------|
   | `LAMBDA_REGION`            | Yes       |                 | `${AWS_REGION}`                      | Lambda region whose servers you want to send the requests |
-  | `LAMBDA_SERVER_PROTO`      | Yes       | `http`, `https` | `https`                              | Protocol to used connect to Lambda server     |
+  | `LAMBDA_SERVER_PROTO`      | Yes       | `http`, `https` | `https`                              | Protocol to connect to Lambda server          |
   | `LAMBDA_SERVER`            | Yes       |                 | `lambda.${AWS_REGION}.amazonaws.com` | Lambda host to connect to                     |
   | `LAMBDA_SERVER_PORT`       | Yes       |                 | `443`                                | SSL/TLS port to connect to                    |
   | `AWS_ACCESS_KEY_ID`        | No        |                 | `${AWS_ACCESS_KEY_ID}`               | AWS access key associated with an IAM account |
@@ -119,7 +119,7 @@
   
   ```bash
   curl --location 'http://localhost/2015-03-31/functions/foo/invocations' \
-       --header 'Content-Type: application/json' \
+       --header 'Content-Type: application/json'                          \
        --data '{ 
            "message": "This is a sample message" 
        }'
