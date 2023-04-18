@@ -13,7 +13,7 @@ Within the proxy layer of `nginx-lambda-gateway`, additional functionality can b
 - For internal/micro services that can't authenticate against the AWS Lambda functions
    (e.g. don't have libraries available) the gateway can provide a means
    to accessing Lambda functions without authentication
-- Protecting Lambda functions from arbitrary public access and traversal
+- Protecting Lambda functions from arbitrary public access
 - For internal/micro services that can't authenticate against the AWS Lambda functions
 - [Rate limiting](http://nginx.org/en/docs/http/ngx_http_limit_req_module.html) AWS Lambda functions
 - Authenticating users to authorize AWS Lambda functions with a [OIDC](https://github.com/nginx-openid-connect)
