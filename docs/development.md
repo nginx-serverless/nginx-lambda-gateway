@@ -34,7 +34,7 @@ To enhance the feature of `nginx-lambda-gateway`, additional configuration or en
 
 ### Examples
 
-In the [`examples/`](../examples/) directory, there are several use cases that show how to extend the base functionality of the NGINX Lambda Gateway by adding additional modules.
+In the [`examples/`](../examples/) directory, there are several use cases that show how to extend the base functionality of the NGINX Lambda Gateway by adding additional configuration and modules.
 
 - [`nginx-lambda-gateway` proxy's '/' location to all AWS Lambda Function ARNs](../examples/01-all-lambda-function-arns/)
   ```bash
@@ -88,3 +88,7 @@ In the [`examples/`](../examples/) directory, there are several use cases that s
 - (TBD) Adding OIDC authentication into the `nginx-lambda-gateway`.
 - (TBD) Rate Limiting to the `nginx-lambda-gateway`.
 - (TBD) Protecting `nginx-lambda-gateway` with WAF.
+
+## Testing
+
+- TBD for unit-test and integration-test
