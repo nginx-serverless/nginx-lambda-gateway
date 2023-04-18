@@ -103,9 +103,37 @@
 
 ## Quick Starter with Running in Your Laptop
 - [Install and run Docker](https://docs.docker.com/engine/install/)
-- Start a NGINX Lambda Gateway
-- Stop a NGINX Lambda Gateway
+- Start a NGINX Lambda Gateway container
+  ```bash
+  make start
+  ```
+
+- Check if a NGINX Lambda Gateway container is running
+  ```bash
+  make watch
+  ``` 
+  
+  ![](./img/make-watch.png)
+
+- Invoke a Lambda Function ARN via NGINX Lambda Gateway
+  
+  ```bash
+  curl --location 'http://localhost/2015-03-31/functions/foo/invocations' \
+       --header 'Content-Type: application/json' \
+       --data '{ 
+           "message": "This is a sample message" 
+       }'
+  ```
+
+- Stop a NGINX Lambda Gateway container
+  ```bash
+  make down
+  ```
+
 - Clean a NGINX Lambda Gateway Container Image
+  ```bash
+  make clean
+  ```
 
 ## Running as a Systemd Service
 - TBD
