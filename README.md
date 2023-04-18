@@ -1,10 +1,12 @@
 # NGINX Lambda Gateway
 
-![](./docs/img/nginx-lambda-gateway-intro.png)
-
 ## Introduction
 
-This project provides a working configuration of NGINX configured to act as an authenticating gateway for the AWS Lambda service. This allows you to proxy a private Lambda function without requiring users to authenticate to it via AWS signature. Within the proxy layer, additional functionality can be configured such as:
+This project provides a working configuration of NGINX configured to act as an authenticating gateway for the AWS Lambda service. This allows you to proxy a private Lambda function without requiring users to authenticate to it via AWS signature. 
+
+![](./docs/img/nginx-lambda-gateway-intro.png)
+
+Within the proxy layer, additional functionality can be configured such as:
 
 - Providing an AWS signature based authentication gateway using an alternative authentication
    system to AWS Lambda functions
@@ -16,6 +18,7 @@ This project provides a working configuration of NGINX configured to act as an a
 - [Rate limiting](http://nginx.org/en/docs/http/ngx_http_limit_req_module.html) AWS Lambda functions
 - Authenticating users to authorize AWS Lambda functions with a [OIDC](https://github.com/nginx-openid-connect)
 - Protecting AWS Lambda functions with a [WAF](https://docs.nginx.com/nginx-waf/)
+
 
 ## Getting Started
 
