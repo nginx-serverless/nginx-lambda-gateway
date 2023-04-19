@@ -14,9 +14,9 @@
  *  limitations under the License.
  */
 
-import awscred from "./awscredentials.js";
-import awssig4 from "./awssig4.js";
-import utils from "./utils.js";
+import awscred from "../awssig/awscredentials.js";
+import awssig4 from "../awssig/awssig4.js";
+import utils from "../awssig/utils.js";
 
 /**
  * Constant defining the service requests are being signed for.
