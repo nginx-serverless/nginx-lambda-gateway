@@ -1,0 +1,3 @@
+[submodule "common/awssig"]
+	path = common/awssig
+	url = git@github.com:nginx-serverless/nginx-aws-signature.git
