@@ -73,18 +73,16 @@ RUN set -x \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
 RUN mkdir -p /etc/nginx/conf.d         \
+    mkdir -p /etc/nginx/awssig      && \
     mkdir -p /etc/nginx/serverless  && \
     mkdir -p /etc/nginx/status 
 
-VOLUME /etc/nginx
-
-RUN mkdir -p /etc/nginx/serverless  && \
-    mkdir -p /etc/nginx/conf.d  
-
 RUN chmod -R 644 /etc/nginx
+RUN chmod -R 644 /etc/nginx/awssig
 RUN chmod -R 644 /etc/nginx/serverless
 RUN chmod -R 644 /etc/nginx/conf.d
 
+COPY  common/awssig/core/*          /etc/nginx/awssig/
 COPY  common/lambda-core/*          /etc/nginx/serverless/
 COPY  common/etc/nginx/nginx.conf   /etc/nginx/
 

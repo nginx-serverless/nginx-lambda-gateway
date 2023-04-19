@@ -9,6 +9,12 @@
 - [Troubleshooting](#troubleshooting)
 
 ## Prerequisites
+- Update a submodule of `nginx-aws-signature` library
+  
+  ```bash
+  make submodule
+  ```
+
 - Create a AWS Lambda Function
   
   ![](../docs/img/lambda-func-creation.png)

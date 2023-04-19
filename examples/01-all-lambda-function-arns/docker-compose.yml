@@ -14,6 +14,7 @@ services:
     volumes:
       - ../../examples/01-all-lambda-function-arns/:/etc/nginx/conf.d/
       - ../../common/lambda-core:/etc/nginx/serverless
+      - ../../common/awssig/core:/etc/nginx/awssig
     ports:
       - "80:80"
     env_file:

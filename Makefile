@@ -1,5 +1,5 @@
 submodule:
-	git submodule update --init git@github.com:nginx-serverless/nginx-aws-signature.git common/awssig
+	git submodule update --init common/awssig
 	git submodule absorbgitdirs
 	git -C common/awssig config core.sparseCheckout true
 	echo 'core/*' >>.git/modules/common/awssig/info/sparse-checkout
