@@ -75,5 +75,4 @@ All code include is licensed under the [Apache 2.0 license](LICENSE.txt).
 ## Inspired Projects
 - [NGINX S3 Gateway](https://github.com/nginxinc/nginx-s3-gateway)
 - [NGINX AWS Signature](https://github.com/nginxinc/nginx-aws-signature)
-- [NGINX Plus OIDC Reference Implementation](https://github.com/nginxinc/nginx-openid-connect)
-- [NGINX OIDC Core and App Examples for ACM/NMS/NIC/N+](https://github.com/nginx-openid-connect)
+- [NGINX OIDC Core and IAM Integration Examples](https://github.com/nginx-openid-connect)
